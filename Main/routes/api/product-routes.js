@@ -3,10 +3,9 @@ const { Product, Category, Tag, ProductTag } = require('../../models');
 
 // The `/api/products` endpoint
 
-// get all products
+// gets all products
 router.get('/', async (req, res) => {
-  // find all products
-  // be sure to include its associated Category and Tag data
+  
   try {
     const productData = await Product.findAll({
       include: [{ model: Tag, through: ProductTag, as: 'product_tags' }]
@@ -17,10 +16,9 @@ router.get('/', async (req, res) => {
   }
 });
 
-// get one product
+// finds a single product by its `id`
 router.get('/:id', async (req, res) => {
-  // find a single product by its `id`
-  // be sure to include its associated Category and Tag data
+  
   try {
     const productData = await Product.findByPk(req.params.id, {
       include: [{ model: Tag, through: ProductTag, as: 'product_tags' }]
@@ -37,14 +35,15 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-// create new product
+// creates new product
 router.post('/', async (req, res) => {
   /* req.body should look like this...
     {
       product_name: "Basketball",
       price: 200.00,
       stock: 3,
-      tagIds: [1, 2, 3, 4]
+      tagIds: [1, 2, 3, 4],
+      category_id: 5
     }
   */
     try {
@@ -73,9 +72,9 @@ router.post('/', async (req, res) => {
   }
 });
 
-// update product
+// updates product
 router.put('/:id', async (req, res) => {
-  // update product data
+  // updates product data
   try {
     const productData = await Product.update(req.body, {
     where: {
@@ -111,7 +110,6 @@ router.put('/:id', async (req, res) => {
     })
     .then((updatedProductTags) => res.json(updatedProductTags))
     .catch((err) => {
-      // console.log(err);
       res.status(400).json(err);
     });
   } catch (err) {
@@ -119,8 +117,9 @@ router.put('/:id', async (req, res) => {
   }
 });
 
+// deletes one product by its `id` value
 router.delete('/:id', async (req, res) => {
-  // delete one product by its `id` value
+  
   try {
     const productData = await Product.destroy({
       where: {
