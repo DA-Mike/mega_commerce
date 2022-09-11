@@ -76,7 +76,7 @@ router.post('/', async (req, res) => {
 router.put('/:id', async (req, res) => {
   // updates product data
   try {
-    const productData = await Product.update(req.body, {
+    Product.update(req.body, {
     where: {
       id: req.params.id,
     },
@@ -87,9 +87,10 @@ router.put('/:id', async (req, res) => {
     })
     .then((productTags) => {
       // get list of current tag_ids
-      const productTagIds = productTags.map(({ tag_id }) => tag_id);
+      const productTagIds = productTags.map(({ tag_id }) => tag_id)
       // create filtered list of new tag_ids
       const newProductTags = req.body.tagIds
+      // console.log('tag_id:', tag_id)
         .filter((tag_id) => !productTagIds.includes(tag_id))
         .map((tag_id) => {
           return {
@@ -111,6 +112,7 @@ router.put('/:id', async (req, res) => {
     .then((updatedProductTags) => res.json(updatedProductTags))
     .catch((err) => {
       res.status(400).json(err);
+      console.log("err:", err)
     });
   } catch (err) {
     res.status(400).json(err);
