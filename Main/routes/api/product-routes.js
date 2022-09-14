@@ -5,7 +5,6 @@ const { Product, Category, Tag, ProductTag } = require('../../models');
 
 // gets all products
 router.get('/', async (req, res) => {
-  
   try {
     const productData = await Product.findAll({
       attributes: {exclude: ['productId', 'tagId']},
@@ -19,7 +18,6 @@ router.get('/', async (req, res) => {
 
 // finds a single product by its `id`
 router.get('/:id', async (req, res) => {
-  
   try {
     const productData = await Product.findByPk(req.params.id, {
       include: [{ model: Tag, through: ProductTag, as: 'tags', foreignKey: 'product_id' }]
@@ -75,7 +73,7 @@ router.post('/', async (req, res) => {
 // updates product
 router.put('/:id', async (req, res) => {
   // updates product data
-  // try {
+  try {
   console.log('body:', req.body)
   Product.update(req.body, {
     where: {
@@ -116,14 +114,13 @@ router.put('/:id', async (req, res) => {
     .catch((err) => {
       res.status(400).json(err);
     });
-  // } catch (err) {
-  //   res.status(400).json(err);
-  // }
+  } catch (err) {
+    res.status(400).json(err);
+  }
 });
 
 // deletes one product by its `id` value
 router.delete('/:id', async (req, res) => {
-  
   try {
     const productData = await Product.destroy({
       where: {
