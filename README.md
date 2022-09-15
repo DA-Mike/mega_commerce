@@ -7,7 +7,7 @@ This project is an e-commerce backend which utilizes node.js, express.js, and se
 
 This was a great project for learning how to connect the backend SQL database to the front-end via API while utilizing an ORM like sequelize. 
 
-The app itself has many routes to its database, where the user can retrieve product categories, products, and product description tags. The user can also create, update, and delete vai all three routes.
+The app itself has many routes to its database, where the user can retrieve product categories, products, and product description tags. The user can also create, update, and delete via all three routes. All in all, this is likely a solid foundation to an ecommerce backend.
 
 ## Table of Contents
 - [Installation](#Installation)
